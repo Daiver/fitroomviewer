@@ -34,6 +34,11 @@
 		<script src="build/three.min.js"></script>
 		<script src="js/loaders/OBJLoader.js"></script>
 
+        <script src="js/controls/TrackballControls.js"></script>
+
+        <script src="js/Detector.js"></script>
+
+
 		<script>
 
 			var container;
@@ -59,6 +64,22 @@
 				camera.position.z = 100;
 
 				// scene
+                controls = new THREE.TrackballControls( camera );
+
+                controls.rotateSpeed = 1.0;
+                controls.zoomSpeed = 1.2;
+                controls.panSpeed = 0.8;
+
+                controls.noZoom = false;
+                controls.noPan = false;
+
+                controls.staticMoving = true;
+                controls.dynamicDampingFactor = 0.3;
+
+                controls.keys = [ 65, 83, 68 ];
+
+                controls.addEventListener( 'change', render );
+
 
 				scene = new THREE.Scene();
 
@@ -68,6 +89,20 @@
 				var directionalLight = new THREE.DirectionalLight( 0xffeedd );
 				directionalLight.position.set( 0, 0, 1 );
 				scene.add( directionalLight );
+
+                /*flashlight = new THREE.SpotLight(0xffffff,4,40);
+                camera.add(flashlight);
+                flashlight.position.set(0,0,1);
+                flashlight.target = camera;
+
+                /*var directionalLight = new THREE.DirectionalLight( 0xffffff, 50.2); 
+                directionalLight.position.set( 0, 0, 1 ); 
+                directionalLight.target.position.set( 0, 0, 0 ); 
+
+                dlightHelper = new THREE.DirectionalLightHelper(directionalLight, 50); 
+                camera.add( dlightHelper);
+
+                camera.add( directionalLight );*/
 
 				// texture
 
@@ -104,31 +139,34 @@
 
 				var loader = new THREE.OBJLoader( manager );
 				//loader.load( 'obj/male02/male02.obj', function ( object ) {
-				loader.load( 'data/Dress/Colour_Male_03_Pose_01_Decimated2.OBJ', function ( object ) {
-
+				//loader.load( 'data/Dress/Colour_Male_03_Pose_01_Decimated2.OBJ', function ( object ) {
+				loader.load( 'data/Dress/Body_Ten24_Wrapped_scalled.OBJ', function ( object ) {
 
 					object.traverse( function ( child ) {
-
 						if ( child instanceof THREE.Mesh ) {
-
 							child.material.map = texture;
-
 						}
 
 					} );
 
-					object.position.y = - 80;
+					//object.position.y = - 80;
+					//object.position.z = - 160;
 					scene.add( object );
+
 
 				}, onProgress, onError );
 
 				//
+                /*camera.position.y = 10;
+                camera.position.z = 120;
+                camera.lookAt(scene.position)*/
+                //camera.translateY(20)
 
 				renderer = new THREE.WebGLRenderer();
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				container.appendChild( renderer.domElement );
 
-				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+				//document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 
 				//
 
@@ -138,41 +176,26 @@
 
 			function onWindowResize() {
 
-				windowHalfX = window.innerWidth / 2;
+				/*windowHalfX = window.innerWidth / 2;
 				windowHalfY = window.innerHeight / 2;
 
 				camera.aspect = window.innerWidth / window.innerHeight;
 				camera.updateProjectionMatrix();
 
-				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setSize( window.innerWidth, window.innerHeight );*/
 
 			}
-
-			function onDocumentMouseMove( event ) {
-
-				mouseX = ( event.clientX - windowHalfX ) / 2;
-				mouseY = ( event.clientY - windowHalfY ) / 2;
-
-			}
-
-			//
 
 			function animate() {
 
 				requestAnimationFrame( animate );
+                controls.update();
 				render();
 
 			}
 
 			function render() {
-
-				camera.position.x += ( mouseX - camera.position.x ) * .05;
-				camera.position.y += ( - mouseY - camera.position.y ) * .05;
-
-				camera.lookAt( scene.position );
-
 				renderer.render( scene, camera );
-
 			}
 
 		</script>
