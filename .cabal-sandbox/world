@@ -1,1 +1,2 @@
+wai-middleware-static -any
 scotty -any
