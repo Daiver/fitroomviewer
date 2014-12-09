@@ -61,7 +61,7 @@
 				document.body.appendChild( container );
 
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
-				camera.position.z = 100;
+				camera.position.z = 500;
 
 				// scene
                 controls = new THREE.TrackballControls( camera );
@@ -139,8 +139,8 @@
 
 				var loader = new THREE.OBJLoader( manager );
 				//loader.load( 'obj/male02/male02.obj', function ( object ) {
-				//loader.load( 'data/Dress/Colour_Male_03_Pose_01_Decimated2.OBJ', function ( object ) {
-				loader.load( 'data/Dress/Body_Ten24_Wrapped_scalled.OBJ', function ( object ) {
+				loader.load( 'data/Dress/Colour_Male_03_Pose_01_Decimated2.OBJ', function ( object ) {
+				//loader.load( 'data/Dress/Body_Ten24_Wrapped_scalled.OBJ', function ( object ) {
 
 					object.traverse( function ( child ) {
 						if ( child instanceof THREE.Mesh ) {
@@ -176,13 +176,13 @@
 
 			function onWindowResize() {
 
-				/*windowHalfX = window.innerWidth / 2;
+				windowHalfX = window.innerWidth / 2;
 				windowHalfY = window.innerHeight / 2;
 
 				camera.aspect = window.innerWidth / window.innerHeight;
 				camera.updateProjectionMatrix();
 
-				renderer.setSize( window.innerWidth, window.innerHeight );*/
+				renderer.setSize( window.innerWidth, window.innerHeight );
 
 			}
 
