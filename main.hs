@@ -24,8 +24,12 @@ main = do
     S.scotty 3000 $ do
         S.get "/" $ do
             S.text "MAIN!"
+        S.get (S.regex "^/models/(.*)$" ) $ do
+            cap <- S.param "1"
+            S.file ("data/Dress/" ++ cap)
+        S.get (S.regex "^/images/(.*)$" ) $ do
+            cap <- S.param "1"
+            S.file ("data/Dress/" ++ cap)
         S.get (S.regex "^/(.*)$" ) $ do
-            --path <- S.param "0"
             cap <- S.param "1"
             S.file ("" ++ cap)
-            --S.text $ mconcat ["Path: ", path, "\nCapture: ", cap]
