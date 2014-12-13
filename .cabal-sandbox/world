@@ -1,3 +1,4 @@
+persistent-postgresql -any
 persistent-template -any
 persistent-sqlite -any
 persistent -any

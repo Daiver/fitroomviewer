@@ -35,6 +35,17 @@ import Database.Persist.Sql
 --
 --
 
+share [mkPersist sqlSettings, mkMigrate "migrateAll"] [persistLowerCase|
+Person
+    name String
+    age Int Maybe
+    deriving Show
+BlogPost
+    title String
+    authorId PersonId
+    deriving Show
+|]
+
 main = do
     S.scotty 3000 $ do
         S.get "/" $ do
