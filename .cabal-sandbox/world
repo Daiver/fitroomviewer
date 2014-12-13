@@ -1,3 +1,4 @@
+persistent-template -any
 persistent-sqlite -any
 persistent -any
 wai-middleware-static -any

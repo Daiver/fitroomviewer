@@ -629,3 +629,17 @@ dependencies: transformers-0.3.0.0 text-0.11.3.1 resourcet-1.1.2.3
 install-outcome: InstallOk
 docs-outcome: NotTried
 tests-outcome: NotTried
+
+package: persistent-template-2.1
+os: linux
+arch: x86_64
+compiler: ghc-7.6.3
+client: cabal-install-1.20.0.3
+dependencies: unordered-containers-0.2.3.0 transformers-0.3.0.0
+              text-0.11.3.1 template-haskell-2.8.0.0 tagged-0.7.3
+              persistent-2.1.1 path-pieces-0.1.4 monad-logger-0.3.8
+              monad-control-0.3.3.0 ghc-prim-0.3.0.0 containers-0.5.0.0
+              bytestring-0.10.0.2 base-4.6.0.1 aeson-0.7.0.4
+install-outcome: InstallOk
+docs-outcome: NotTried
+tests-outcome: NotTried
