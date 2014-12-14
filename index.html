@@ -26,7 +26,14 @@
 	</head>
 
 	<body>
-        <div id=NOPE><p>j</p></div>
+        <div id=info><p>Some interest text</p></div>
+        <div id='viewport' width=50% height=100%></div>
+        <div style="margin-left:80%;background-color:#567;width:20%;height:100%;">
+            <p>
+                Yet another text
+            </p>
+        </div>
+
 
 		<script src="three.js/build/three.min.js"></script>
 		<script src="three.js/js/loaders/OBJLoader.js"></script>
@@ -91,14 +98,15 @@
 
 			init();
 			animate();
-            loadScan();
+            //loadScan();
             loadGarment();
 
 
 			function init() {
 
-				container = document.createElement( 'div' );
-				document.body.appendChild( container );
+				//container = document.createElement( 'div' );
+				container = document.getElementById('viewport')
+				//document.body.appendChild( container );
 
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
 				camera.position.z = 500;
@@ -158,8 +166,8 @@
                 camera.lookAt(scene.position)*/
                 //camera.translateY(20)
 
-				renderer = new THREE.WebGLRenderer();
-				renderer.setSize( window.innerWidth, window.innerHeight );
+                renderer = new THREE.WebGLRenderer();
+				renderer.setSize( window.innerWidth*0.8, window.innerHeight * 0.8 );
 				container.appendChild( renderer.domElement );
 
 				//document.addEventListener( 'mousemove', onDocumentMouseMove, false );
