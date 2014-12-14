@@ -27,26 +27,30 @@ import Database.Persist.TH
 import Database.Persist.Sqlite
 
 import Database.Persist.Sql
---
---
 
---
---import Web.Scotty.Hastache
---
---
+runDb = runSqlite "dev.sqlite3"
 
 share [mkPersist sqlSettings, mkMigrate "migrateAll"] [persistLowerCase|
-Person
-    name String
-    age Int Maybe
+User
+    name     String
+    password String
     deriving Show
-BlogPost
-    title String
-    authorId PersonId
+
+UserScan
+    ownerId       UserId
+    pathToModel   String
     deriving Show
+
+Garment
+    name          String
+    pathToPreview String
+    pathToModel   String
+    deriving Show
+
 |]
 
 main = do
+    runDb $ runMigration migrateAll
     S.scotty 3000 $ do
         S.get "/" $ do
             S.text "MAIN!"
