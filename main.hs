@@ -28,9 +28,14 @@ import Database.Persist.Sqlite
 
 import Database.Persist.Sql
 
-runDb = runSqlite "dev.sqlite3"
+runDb = runSqlite "devDB.sqlite3"
 
 share [mkPersist sqlSettings, mkMigrate "migrateAll"] [persistLowerCase|
+Settings
+    key   String
+    value String
+    deriving Show
+
 User
     name     String
     password String
@@ -48,6 +53,10 @@ Garment
     deriving Show
 
 |]
+
+addInitDataIntoDB = runDb $ do
+    _ <- insert $ Settings "isInitialized" "True"
+    return ()
 
 main = do
     runDb $ runMigration migrateAll
