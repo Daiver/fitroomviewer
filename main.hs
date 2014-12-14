@@ -58,8 +58,19 @@ addInitDataIntoDB = runDb $ do
     _ <- insert $ Settings "isInitialized" "True"
     return ()
 
+initDbIfNotInitialized = do
+    li <- runDb $ selectList [SettingsKey ==. "isInitialized"] []
+    if null li then do
+        print "Initializing"
+        addInitDataIntoDB
+        return ()
+    else do
+        print "BD already isInitialized"
+        return ()
+
 main = do
     runDb $ runMigration migrateAll
+    initDbIfNotInitialized
     S.scotty 3000 $ do
         S.get "/" $ do
             S.text "MAIN!"
