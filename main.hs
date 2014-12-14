@@ -42,20 +42,23 @@ User
     deriving Show
 
 UserScan
-    ownerId       UserId
+    --ownerId       UserId
     pathToModel   String
+    pathToTexture String
     deriving Show
 
 Garment
     name          String
     pathToPreview String
     pathToModel   String
+    pathToTexture String
     deriving Show
 
 |]
 
 addInitDataIntoDB = runDb $ do
     _ <- insert $ Settings "isInitialized" "True"
+    _ <- insert $ UserScan "Colour_Male_03_Pose_01_Decimated2.OBJ" ""
     return ()
 
 initDbIfNotInitialized = do

@@ -35,6 +35,47 @@
 
         <script src="three.js/js/Detector.js"></script>
 
+        <script>
+            function loadScan() {
+                if(globalModel != null)
+                    scene.remove(globalModel)
+				var loader = new THREE.ImageLoader( manager );
+				loader.load( 'images/Texture.jpg', function ( image ) {
+					texture.image = image;
+					texture.needsUpdate = true;
+				} );
+
+				// model
+				var loader = new THREE.OBJLoader( manager );
+				loader.load( 'models/Colour_Male_03_Pose_01_Decimated2.OBJ', function ( object ) {
+                    //object.visible = false;
+					object.traverse( function ( child ) {
+						if ( child instanceof THREE.Mesh ) {
+							child.material.map = texture;
+						}
+
+					} );
+                    globalModel = object
+					scene.add( object );
+
+				}, onProgress, onError );
+            }
+        
+            function loadGarment(){
+                if(globalGarment != null)
+                    scene.remove(globalGarment)
+				var loader = new THREE.OBJLoader( manager );
+                loader.load( 'models/aligned_jeans_and_shirt.obj', function ( object ) {
+                    globalGarment = object;
+                    //object.visible = false;
+					scene.add( object );
+
+				}, onProgress, onError );
+
+            }
+
+        </script>
+
 
 		<script>
 
@@ -50,6 +91,8 @@
 
 			init();
 			animate();
+            loadScan();
+            loadGarment();
 
 
 			function init() {
@@ -87,71 +130,27 @@
 				directionalLight.position.set( 0, 0, 1 );
 				scene.add( directionalLight );
 
-                /*flashlight = new THREE.SpotLight(0xffffff,4,40);
-                camera.add(flashlight);
-                flashlight.position.set(0,0,1);
-                flashlight.target = camera;
-
-                /*var directionalLight = new THREE.DirectionalLight( 0xffffff, 50.2); 
-                directionalLight.position.set( 0, 0, 1 ); 
-                directionalLight.target.position.set( 0, 0, 0 ); 
-
-                dlightHelper = new THREE.DirectionalLightHelper(directionalLight, 50); 
-                camera.add( dlightHelper);
-
-                camera.add( directionalLight );*/
-
 				// texture
 
-				var manager = new THREE.LoadingManager();
+				manager = new THREE.LoadingManager();
 				manager.onProgress = function ( item, loaded, total ) {
-
 					console.log( item, loaded, total );
-
 				};
 
-				var texture = new THREE.Texture();
+				texture = new THREE.Texture();
 
-				var onProgress = function ( xhr ) {
+				onProgress = function ( xhr ) {
 					if ( xhr.lengthComputable ) {
 						var percentComplete = xhr.loaded / xhr.total * 100;
 						console.log( Math.round(percentComplete, 2) + '% downloaded' );
 					}
 				};
 
-				var onError = function ( xhr ) {
+				onError = function ( xhr ) {
 				};
 
-
-				var loader = new THREE.ImageLoader( manager );
-				//loader.load( 'textures/UV_Grid_Sm.jpg', function ( image ) {
-				loader.load( 'images/Texture.jpg', function ( image ) {
-
-					texture.image = image;
-					texture.needsUpdate = true;
-
-				} );
-
-				// model
-
-				var loader = new THREE.OBJLoader( manager );
-				loader.load( 'models/Colour_Male_03_Pose_01_Decimated2.OBJ', function ( object ) {
-				//loader.load( 'data/Dress/Body_Ten24_Wrapped_scalled.OBJ', function ( object ) {
-
-					object.traverse( function ( child ) {
-						if ( child instanceof THREE.Mesh ) {
-							child.material.map = texture;
-						}
-
-					} );
-
-					//object.position.y = - 80;
-					//object.position.z = - 160;
-                    globalModel = object
-					scene.add( object );
-
-
-				}, onProgress, onError );
+                globalModel = null;
+                globalGarment = null;
 
 				//
                 /*camera.position.y = 10;
