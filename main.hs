@@ -77,16 +77,15 @@ main = do
     S.scotty 3000 $ do
         S.get "/" $ do
             S.file "index.html"
-        S.get "/models/garment/:name" $ do
-            cap <- S.param "name"
-            S.file ("data/models/garment/" ++ cap)
+        S.get "/models/garment/:name" $
+            S.file . ("data/models/garment/" ++ ) =<< S.param "name"
         S.get "/models/scans/:name" $ do
-            cap <- S.param "name"
-            S.file ("data/models/scans/" ++ cap)
+            S.file . ("data/models/scans/" ++ ) =<< S.param "name"
 
         S.get "/images/:name" $ do
-            cap <- S.param "name"
-            S.file ("data/Dress/" ++ cap)
+            S.file . ("data/textures/" ++ ) =<< S.param "name"
+            --cap <- S.param "name"
+            --S.file ("data/Dress/" ++ cap)
         S.get (S.regex "^/three.js/(.*)$" ) $ do
             cap <- S.param "1"
             S.file ("three.js/" ++ cap)
