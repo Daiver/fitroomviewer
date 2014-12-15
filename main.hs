@@ -77,11 +77,14 @@ main = do
     S.scotty 3000 $ do
         S.get "/" $ do
             S.text "MAIN!"
-        S.get (S.regex "^/models/(.*)$" ) $ do
-            cap <- S.param "1"
-            S.file ("data/Dress/" ++ cap)
-        S.get (S.regex "^/images/(.*)$" ) $ do
-            cap <- S.param "1"
+        S.get "/models/garment/:name" $ do
+            cap <- S.param "name"
+            S.file ("data/models/garment/" ++ cap)
+        S.get "/models/scans/:name" $ do
+            cap <- S.param "name"
+            S.file ("data/models/scans/" ++ cap)
+        S.get "/images/:name" $ do
+            cap <- S.param "name"
             S.file ("data/Dress/" ++ cap)
         S.get (S.regex "^/(.*)$" ) $ do
             cap <- S.param "1"

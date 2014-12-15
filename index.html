@@ -54,7 +54,7 @@
 
 				// model
 				var loader = new THREE.OBJLoader( manager );
-				loader.load( 'models/Colour_Male_03_Pose_01_Decimated2.OBJ', function ( object ) {
+				loader.load( 'models/scans/Colour_Male_03_Pose_01_Decimated2.OBJ', function ( object ) {
                     //object.visible = false;
 					object.traverse( function ( child ) {
 						if ( child instanceof THREE.Mesh ) {
@@ -72,7 +72,7 @@
                 if(globalGarment != null)
                     scene.remove(globalGarment)
 				var loader = new THREE.OBJLoader( manager );
-                loader.load( 'models/aligned_jeans_and_shirt.obj', function ( object ) {
+                loader.load( 'models/garment/aligned_jeans_and_shirt.obj', function ( object ) {
                     globalGarment = object;
                     //object.visible = false;
 					scene.add( object );
@@ -98,7 +98,7 @@
 
 			init();
 			animate();
-            //loadScan();
+            loadScan();
             loadGarment();
 
 
