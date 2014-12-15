@@ -76,16 +76,17 @@ main = do
     initDbIfNotInitialized
     S.scotty 3000 $ do
         S.get "/" $ do
-            S.text "MAIN!"
+            S.file "index.html"
         S.get "/models/garment/:name" $ do
             cap <- S.param "name"
             S.file ("data/models/garment/" ++ cap)
         S.get "/models/scans/:name" $ do
             cap <- S.param "name"
             S.file ("data/models/scans/" ++ cap)
+
         S.get "/images/:name" $ do
             cap <- S.param "name"
             S.file ("data/Dress/" ++ cap)
-        S.get (S.regex "^/(.*)$" ) $ do
+        S.get (S.regex "^/three.js/(.*)$" ) $ do
             cap <- S.param "1"
-            S.file ("" ++ cap)
+            S.file ("three.js/" ++ cap)
