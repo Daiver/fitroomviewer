@@ -18,6 +18,8 @@ import Network.Wai.Middleware.Static
 import Control.Monad
 import Data.Monoid
 
+import Data.Text.Lazy(pack)
+
 import Database.Persist.Sqlite (SqlPersist, withSqliteConn, runSqlConn, runMigration, runSqlite)
 import Control.Monad.Trans.Resource (runResourceT, ResourceT)
 import Control.Monad.IO.Class (liftIO)
@@ -59,6 +61,7 @@ Garment
 addInitDataIntoDB = runDb $ do
     _ <- insert $ Settings "isInitialized" "True"
     _ <- insert $ UserScan "Colour_Male_03_Pose_01_Decimated2.OBJ" ""
+    _ <- insert $ Garment "Jeans And Shirt" "Colour_Male_03_Pose_01_Decimated2.OBJ" "" ""
     return ()
 
 initDbIfNotInitialized = do
@@ -86,3 +89,8 @@ main = do
             S.file . ("data/textures/" ++ ) =<< S.param "name"
         S.get (S.regex "^/three.js/(.*)$" ) $ do
             S.file . ("three.js/" ++ ) =<< S.param "1"
+
+        S.get "/listofgarment" $ do
+            li <- liftIO . runDb $ selectList ([] :: [Filter Garment]) []
+            let l2 = map (garmentName . entityVal) li
+            S.text $ mconcat . map pack $ l2
