@@ -84,8 +84,5 @@ main = do
 
         S.get "/images/:name" $ do
             S.file . ("data/textures/" ++ ) =<< S.param "name"
-            --cap <- S.param "name"
-            --S.file ("data/Dress/" ++ cap)
         S.get (S.regex "^/three.js/(.*)$" ) $ do
-            cap <- S.param "1"
-            S.file ("three.js/" ++ cap)
+            S.file . ("three.js/" ++ ) =<< S.param "1"
