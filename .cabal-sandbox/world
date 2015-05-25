@@ -1,6 +1,0 @@
-persistent-postgresql -any
-persistent-template -any
-persistent-sqlite -any
-persistent -any
-wai-middleware-static -any
-scotty -any
